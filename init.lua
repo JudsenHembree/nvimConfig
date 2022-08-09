@@ -127,8 +127,13 @@ require'nvim-treesitter.configs'.setup {
 
 -- debugging
 -- mapping
+map("n", "<leader>b", "<CMD>lua require'dap'.toggle_breakpoint()<CR>", opts)
+map("n", "<leader>c", "<CMD>lua require'dap'.continue()<CR>", opts)
+map("n", "<leader>s", "<CMD>lua require'dap'.step_into()<CR>", opts)
+map("n", "<leader>S", "<CMD>lua require'dap'.step_over()<CR>", opts)
+map("n", "<leader>O", "<CMD>lua require'dap'.step_out()<CR>", opts)
 
-
+require("dap")
 require("dapui").setup() -- ui for dap
 require'dap-go'.setup() -- go debugger dlv
 
@@ -143,3 +148,13 @@ dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
 
+vim.fn.sign_define('DapBreakpoint', {text='ඞ', texthl='', linehl='', numhl=''})
+
+
+-- toggle term
+map("t", "<ESC>", [[<C-\><C-n>]], {noremap = true})
+
+require'toggleterm'.setup{
+	open_mapping = [[<leader><leader>]],
+	direction = 'float'
+}

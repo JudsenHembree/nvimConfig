@@ -34,5 +34,9 @@ return require('packer').startup(function(use)
 
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} } -- debugger :chad:
   use 'leoluz/nvim-dap-go' -- auto config for go dap
- 
+
+
+  -- toggle term for opening terminal fast
+  use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
+
 end)
