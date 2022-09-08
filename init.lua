@@ -1,8 +1,8 @@
 require('plugins')
+require('completion')
 
 -- shorten the nvim map function
 local map = vim.api.nvim_set_keymap
-
 -- options
 local opts = {noremap = true, silent = true}
 
@@ -11,6 +11,8 @@ map("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- source snippets
+vim.keymap.set("n", "<leader><leader>s", "<CMD>source ~/.config/nvim/lua/completion.lua<CR>")
 -- colorscheme stuff
 vim.cmd("set termguicolors")
 vim.cmd("colorscheme duskfox") -- synthwave :(
@@ -23,64 +25,7 @@ map("n", "<leader>cs", "<CMD>lua require'telescope.builtin'.colorscheme()<CR>", 
 map("n", "<leader>M", "<CMD>lua require'telescope.builtin'.keymaps()<CR>", opts)
 map("n", "<leader>K", "<CMD>lua require'telescope.builtin'.lsp_definitions({jump_type = 'never'})<CR>", opts)
 -- map("n", "<leader>H", ":lua require'telescope.builtin'.commands()<CR>", opts) -- seems kinda not useful
-
-
-
-
--- nvim completion setup
--- Setup nvim-cmp.
-  local cmp = require'cmp'
-
-  cmp.setup({
-    snippet = {
-      expand = function(args)
-         require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      end,
-    },
-    window = {
-      completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
-    },
-    mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-
-      -- tab complete like vs code
-      ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-
-    }),
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'luasnip' }, -- For luasnip users.
-    }, {
-      { name = 'buffer' },
-    })
-  })
-
-
+map("n", "<leader>d", "<CMD>lua require'telescope.builtin'.diagnostics()<CR>", opts) 
 
 
 
@@ -89,6 +34,16 @@ map("n", "<leader>K", "<CMD>lua require'telescope.builtin'.lsp_definitions({jump
 
 -- set up lsp
 require'lspconfig'.gopls.setup{} --setup gopls
+
+-- lint on write
+local function lspLint()
+	vim.lsp.buf.formatting()
+end
+
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+	pattern = {"*go"},
+	callback = lspLint,
+})
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
@@ -150,11 +105,42 @@ end
 
 vim.fn.sign_define('DapBreakpoint', {text='ඞ', texthl='', linehl='', numhl=''})
 
+-- cpp specific define the cpp adapter comes from vscode
+require('dap').adapters.cppdbg = {
+  id = 'cppdbg',
+  type = 'executable',
+  command = '/home/vagrant/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
+}
+
+require('dap').configurations.cpp = {
+  {
+    name = "Launch file",
+    type = "cppdbg",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = true,
+  },
+  {
+    name = 'Attach to gdbserver :1234',
+    type = 'cppdbg',
+    request = 'launch',
+    MIMode = 'gdb',
+    miDebuggerServerAddress = 'localhost:1234',
+    miDebuggerPath = '/usr/bin/gdb',
+    cwd = '${workspaceFolder}',
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+  },
+}
 
 -- toggle term
 map("t", "<ESC>", [[<C-\><C-n>]], {noremap = true})
 
+map("n", "<leader><leader>", "<Cmd>ToggleTerm<CR>", opts)
 require'toggleterm'.setup{
-	open_mapping = [[<leader><leader>]],
 	direction = 'float'
 }
