@@ -6,9 +6,14 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim' -- plugin manager
+  use 'folke/tokyonight.nvim' -- Tokyo bby
   use "EdenEast/nightfox.nvim" -- close to synth with duskfox
   use 'neovim/nvim-lspconfig' -- Configurations for Nvim LSP
 
+  use { 
+	  "WhoIsSethDaniel/mason-tool-installer.nvim",
+	  requires = { {  "williamboman/mason.nvim"  } }
+  }
 
   -- telescope is fuzzy finder and such
   use {
