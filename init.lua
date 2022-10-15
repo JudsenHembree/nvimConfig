@@ -11,10 +11,25 @@ require('completion')
 	vim.g.mapleader = " "
 	vim.g.maplocalleader = " "
 
+-- latex memes
+	vim.api.nvim_create_autocmd({"BufWritePost"}, {
+		pattern = {"*.tex"},
+		command = ':! pdflatex *.tex',
+		desc = 'update the pdf'
+	})
+	vim.api.nvim_create_autocmd({"BufEnter"}, {
+		pattern = {"*.tex"},
+		command = 'wincmd =',
+		desc = 'auto size window'
+	})
+
 -- source snippets
 	vim.keymap.set("n", "<leader><leader>s", "<CMD>source ~/.config/nvim/lua/completion.lua<CR>")
 
 -- colorscheme stuff
+	require("tokyonight").setup({
+		transparent = true, -- Enable this to disable setting the background color
+	})
 	-- vim.cmd("colorscheme nightfox")
 	vim.cmd[[colorscheme tokyonight]]
 	vim.cmd("set termguicolors")
@@ -30,7 +45,6 @@ require('completion')
 	  ensure_installed = {
 		  'clangd',
 		  'clang-format',
-		  'lua-language-server',
 		  'gopls',
 		  'stylua',
 		  'shellcheck',
@@ -80,7 +94,8 @@ require('completion')
 
 
 
-
+--lua
+--setup lsp
 
 -- GOLANG
 -- set up lsp
@@ -103,7 +118,7 @@ require('completion')
 		vim.lsp.buf.formatting()
 	end
 	vim.api.nvim_create_autocmd({"BufWritePre"}, {
-		pattern = {"*go"},
+		pattern = {"*py"},
 		callback = pylspLint,
 	})
 

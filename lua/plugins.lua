@@ -41,6 +41,10 @@ return require('packer').startup(function(use)
   use 'leoluz/nvim-dap-go' -- auto config for go dap
 
 
+
+  -- latex integration
+  use 'lervag/vimtex'
+
   -- toggle term for opening terminal fast
   use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
 
