@@ -43,7 +43,7 @@ return require('packer').startup(function(use)
 
 
   -- latex integration
-  use 'lervag/vimtex'
+  use { 'lervag/vimtex' }
 
   -- toggle term for opening terminal fast
   use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
