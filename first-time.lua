@@ -40,7 +40,7 @@ command = "ls ~/.local/share/nvim/site/pack/packer/start/packer.nvim"
 handle = io.popen(command)
 result = handle:read("*a")
 handle:close()
-if string.find(result, "cannot access") then
+if result == "" then
 	command = "git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim"
 	handle = io.popen(command)
 	result = handle:read("*a")
