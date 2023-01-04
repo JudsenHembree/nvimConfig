@@ -1,4 +1,6 @@
-package.path = package.path .. ";./lua/utils/?.lua;./lua/general-appearance/?.lua;./lua/keybinds/?.lua"
+local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config"
+config_home = config_home .. "/nvim"
+package.path = package.path .. ";" .. config_home .. "/lua/utils/?.lua;" .. config_home .. "/lua/general-appearance/?.lua;" .. config_home .. "/lua/keybinds/?.lua"
 require('plugins')
 require('completion')
 
@@ -16,4 +18,4 @@ require('completion')
 	require('keybinds')
 
 -- test function
-	--utils.map('n', '<leader>tt', ":lua require('auto-install').ripgrep()<CR>")
+	utils.map('n', '<leader>tt', ":lua require('auto-install').auto()<CR>")
