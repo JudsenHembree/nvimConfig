@@ -37,17 +37,14 @@ return require('packer').startup(function(use)
 	  config = require("glow-config")
   }
 
-  use { 
-	  "WhoIsSethDaniel/mason-tool-installer.nvim",
-	  requires = { {  "williamboman/mason.nvim"  } },
-	  config = require("mason-config")
+  use { "williamboman/mason.nvim",
+  	config = require("mason-config")
   }
 
   -- telescope is fuzzy finder and such
   use {
 	  'nvim-telescope/telescope.nvim', tag = '0.1.0',
 	  requires = { {'nvim-lua/plenary.nvim'} },
-	  config = require("telescope-config")
   }
 
   -- treesitter improves syntax
@@ -56,28 +53,10 @@ return require('packer').startup(function(use)
 	  run = ":TSUpdate",
   }
 
-  -- nvim completion
-  -- dead after co-pilot
-  -- [[
-  use {
-	  "hrsh7th/nvim-cmp",
-	  requires = {
-		  'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 
-		  'hrsh7th/cmp-cmdline', 'hrsh7th/nvim-cmp', 'L3MON4D3/LuaSnip', 
-		  'saadparwaiz1/cmp_luasnip'
-	  }
-  }
-  --]]
-
   -- work in progress
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} } -- debugger :chad:
   use 'leoluz/nvim-dap-go' -- auto config for go dap
 
   -- latex integration
   use { 'lervag/vimtex' }
-
-  -- toggle term for opening terminal fast
-  -- kill and use tmux
-  --use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
-
 end)

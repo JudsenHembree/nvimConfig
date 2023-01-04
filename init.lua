@@ -1,8 +1,7 @@
 local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config"
 config_home = config_home .. "/nvim"
-package.path = package.path .. ";" .. config_home .. "/lua/utils/?.lua;" .. config_home .. "/lua/general-appearance/?.lua;" .. config_home .. "/lua/keybinds/?.lua"
+package.path = package.path .. ";" .. config_home .. "/lua/utils/?.lua;" .. config_home .. "/lua/general-appearance/?.lua;" .. config_home .. "/lua/keybinds/?.lua;" .. config_home .. "/?.lua"
 require('plugins')
-require('completion')
 
 -- link utils
 	local utils = require('utils')
@@ -19,3 +18,6 @@ require('completion')
 
 -- test function
 	utils.map('n', '<leader>tt', ":lua require('auto-install').auto()<CR>")
+
+	require("mason").setup()
+	require("telescope").setup()
