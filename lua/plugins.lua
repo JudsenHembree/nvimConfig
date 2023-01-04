@@ -1,24 +1,53 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
-
+-- shorten cmd syntax with local
+local cmd = vim.api.nvim_command 
+-- auto install packer if needed
+	local fn = vim.fn
+	local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+	if fn.empty(fn.glob(install_path)) > 0 then
+	  fn.system({
+	    'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path
+	  })
+	  vim.api.nvim_command('packadd packer.nvim')
+	end
 -- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+	vim.cmd [[packadd packer.nvim]]
 
+-- startup
 return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim' -- plugin manager
-  use 'folke/tokyonight.nvim' -- Tokyo bby
-  use "EdenEast/nightfox.nvim" -- close to synth with duskfox
-  use 'neovim/nvim-lspconfig' -- Configurations for Nvim LSP
+
+  -- colorscheme
+  use {'folke/tokyonight.nvim'}  -- Tokyo bby
+  --use "EdenEast/nightfox.nvim" -- close to synth with duskfox
+
+  -- lsp
+  use {'neovim/nvim-lspconfig',
+  	config = "require('lsp-config')"
+	} -- Configurations for Nvim LSP
+
+  -- tmux and neovim window swaps
+  use {
+	"christoomey/vim-tmux-navigator"
+  }
+
+  -- markdown preview
+  use {
+	  "ellisonleao/glow.nvim",
+	  config = require("glow-config")
+  }
 
   use { 
 	  "WhoIsSethDaniel/mason-tool-installer.nvim",
-	  requires = { {  "williamboman/mason.nvim"  } }
+	  requires = { {  "williamboman/mason.nvim"  } },
+	  config = require("mason-config")
   }
 
   -- telescope is fuzzy finder and such
   use {
 	  'nvim-telescope/telescope.nvim', tag = '0.1.0',
-	  requires = { {'nvim-lua/plenary.nvim'} }
+	  requires = { {'nvim-lua/plenary.nvim'} },
+	  config = require("telescope-config")
   }
 
   -- treesitter improves syntax
@@ -28,6 +57,8 @@ return require('packer').startup(function(use)
   }
 
   -- nvim completion
+  -- dead after co-pilot
+  -- [[
   use {
 	  "hrsh7th/nvim-cmp",
 	  requires = {
@@ -36,16 +67,17 @@ return require('packer').startup(function(use)
 		  'saadparwaiz1/cmp_luasnip'
 	  }
   }
+  --]]
 
+  -- work in progress
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} } -- debugger :chad:
   use 'leoluz/nvim-dap-go' -- auto config for go dap
-
-
 
   -- latex integration
   use { 'lervag/vimtex' }
 
   -- toggle term for opening terminal fast
-  use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
+  -- kill and use tmux
+  --use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
 
 end)
