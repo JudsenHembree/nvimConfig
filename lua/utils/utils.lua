@@ -3,8 +3,6 @@
 -- table to return
 	local utils = {}
 
-
-
 -- shorten the nvim map function
 function utils.map(mode, lhs, rhs, opts)
 	local options = {noremap = true, silent = true}
@@ -40,12 +38,9 @@ function utils.notify(msg)
 	end
 end
 
-
 -- leader key. used to toggle into further commands
 	utils.map("", "<Space>", "<Nop>", opts)
 	vim.g.mapleader = " "
 	vim.g.maplocalleader = " "
-
-
 
 return utils

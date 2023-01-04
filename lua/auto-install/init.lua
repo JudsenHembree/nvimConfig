@@ -48,8 +48,6 @@ function auto_install.ripgrep()
 			end
 		end
 		utils.notify(notification)
-	else
-		utils.notify("Ripgrep already installed")
 	end
 end
 

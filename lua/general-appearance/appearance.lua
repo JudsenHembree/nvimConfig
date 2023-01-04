@@ -8,5 +8,10 @@ function appearance.set_scheme(x)
     	vim.cmd('colorscheme ' .. x)
 end
 
+function appearance.set_banner(x)
+	vim.cmd("set helpfile=banner.txt")
+end
+
+
 --vim.cmd("colorscheme duskfox") -- synthwave :(
 return appearance
