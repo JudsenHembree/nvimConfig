@@ -17,6 +17,10 @@ require('plugins')
 	local lsp = require('lsp-config')
 	lsp.setup()
 
+-- setup completion
+	local completion = require('completion')
+	completion.setup()
+
 -- link other binds
 	require('keybinds')
 
