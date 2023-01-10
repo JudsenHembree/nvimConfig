@@ -17,6 +17,12 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim' -- plugin manager
 
+
+  -- cmp
+
+  
+
+
   -- colorscheme
   use {'folke/tokyonight.nvim'}  -- Tokyo bby
   --use "EdenEast/nightfox.nvim" -- close to synth with duskfox
@@ -25,6 +31,11 @@ return require('packer').startup(function(use)
   use {'neovim/nvim-lspconfig',
   	config = "require('lsp-config')"
 	} -- Configurations for Nvim LSP
+  -- lsp in docker
+  use {'lspcontainers/lspcontainers.nvim'}
+
+  -- Copilot
+  use {'github/copilot.vim'}
 
   -- tmux and neovim window swaps
   use {

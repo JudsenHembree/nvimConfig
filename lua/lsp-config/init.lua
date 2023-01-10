@@ -1,6 +1,11 @@
+local lsp = {}
+function lsp.setup()
+	require'lspconfig'.gopls.setup{} --setup gopls
+	require'lspconfig'.pyright.setup{} --setup gopls
+	require'lspconfig'.clangd.setup{} --setup gopls
+end
 -- GOLANG
 -- set up lsp
-	require'lspconfig'.gopls.setup{} --setup gopls
 -- lint on write
 	local function lspLint()
 		vim.lsp.buf.formatting()
@@ -13,7 +18,6 @@
 
 -- Python
 -- set up lsp
-	require'lspconfig'.pyright.setup{} --setup gopls
 -- lint on write
 	local function pylspLint()
 		vim.lsp.buf.formatting()
@@ -24,7 +28,6 @@
 	})
 
 --c/cpp/rust
-	require'lspconfig'.clangd.setup{} --setup gopls
 
 	-- lint on write
 		local function cpplspLint()
@@ -35,3 +38,4 @@
 			callback = cpplspLint,
 		})
 	
+return lsp

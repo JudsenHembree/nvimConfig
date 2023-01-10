@@ -13,6 +13,10 @@ require('plugins')
 	local auto_install = require('auto-install')
 	auto_install.auto()
 
+-- setup lsp
+	local lsp = require('lsp-config')
+	lsp.setup()
+
 -- link other binds
 	require('keybinds')
 
