@@ -17,6 +17,10 @@ require('plugins')
 	local lsp = require('lsp-config')
 	lsp.setup()
 
+-- linter
+	local linter = require('linter')
+	linter.setup()
+
 -- setup completion
 	local completion = require('completion')
 	completion.setup()
@@ -29,3 +33,5 @@ require('plugins')
 
 	require("mason").setup()
 	require("telescope").setup()
+
+

@@ -46,6 +46,9 @@ return require('packer').startup(function(use)
   -- lsp in docker
   use {'lspcontainers/lspcontainers.nvim'}
 
+  -- linter
+  use {'mfussenegger/nvim-lint'}
+
   -- Copilot
   use {'github/copilot.vim'}
 
