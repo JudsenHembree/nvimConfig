@@ -17,6 +17,19 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim' -- plugin manager
 
+  -- harpoon navigation
+  use {
+      "ThePrimeagen/harpoon",
+      config = function()
+          require("harpoon").setup()
+      end
+  }
+
+  -- plugin for clipboard
+  use {
+      'ojroques/nvim-osc52'
+  }
+
   -- cmp
   use {
     'hrsh7th/nvim-cmp',
@@ -60,8 +73,13 @@ return require('packer').startup(function(use)
   -- markdown preview
   use {
 	  "ellisonleao/glow.nvim",
-	  config = require("glow-config")
+	  config = function() require("glow").setup() end,
   }
+
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
 
   use { "williamboman/mason.nvim",
   	config = require("mason-config")
