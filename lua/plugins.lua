@@ -97,9 +97,8 @@ return require('packer').startup(function(use)
 	  run = ":TSUpdate",
   }
 
-  -- work in progress
+  -- in file debugging
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} } -- debugger :chad:
-  use 'leoluz/nvim-dap-go' -- auto config for go dap
 
   -- latex integration
   use { 'lervag/vimtex' }
