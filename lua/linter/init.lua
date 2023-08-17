@@ -1,17 +1,18 @@
-local utils = require('utils')
-
 local linter = {}
 
 function linter.setup()
-	require('lint').linters_by_ft = {
-		python = {'pylint',},
-	}
+    local ft = require('guard.filetype')
 
-	vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-		callback = function()
-			require('lint').try_lint()
-		end,
-	})
+    ft('cpp'):fmt('clang-format')
+       :lint('clang-tidy')
+
+    -- Call setup() LAST!
+    require('guard').setup({
+        -- the only options for the setup function
+        fmt_on_save = true,
+        -- Use lsp if no formatter was defined for this filetype
+        lsp_as_default_formatter = false,
+    })
 end
 
 return linter

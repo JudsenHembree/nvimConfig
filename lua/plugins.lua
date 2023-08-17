@@ -25,6 +25,11 @@ return require('packer').startup(function(use)
       end
   }
 
+  -- use guard instead of nullls
+  use{
+      "nvimdev/guard.nvim"
+  }
+
   -- plugin for clipboard
   use {
       'ojroques/nvim-osc52'
