@@ -1,37 +1,54 @@
+vim.cmd([[set runtimepath ^=/home/hybridos/nvim_memes/vimfims]])
 local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config"
 config_home = config_home .. "/nvim"
 package.path = package.path .. ";" .. config_home .. "/lua/utils/?.lua;" .. config_home .. "/lua/general-appearance/?.lua;" .. config_home .. "/lua/keybinds/?.lua;" .. config_home .. "/?.lua"
 require('plugins')
 
 -- link utils
-	local utils = require('utils')
+local utils = require('utils')
 -- link appearance
-	local appearance = require('appearance')
-	-- apply general-appearance
-	appearance.set_scheme('tokyonight-night')
--- link auto-install
-	local auto_install = require('auto-install')
-	auto_install.auto()
+local appearance = require('appearance')
+-- apply general-appearance
+appearance.set_scheme('tokyonight-night')
+
+-- basics
+require("mason").setup()
+require("telescope").setup()
+
+-- link harpoon
+local harpoon = require('harpoon-config')
+harpoon.binds()
+
+-- setup clipboard
+local clipboard = require('clipboard')
+clipboard.setup()
 
 -- setup lsp
-	local lsp = require('lsp-config')
-	lsp.setup()
+local lsp = require('lsp-config')
+lsp.setup()
+lsp.setup_sort_of_lsp()
 
 -- linter
-	local linter = require('linter')
-	linter.setup()
+local linter = require('linter')
+linter.setup()
 
 -- setup completion
-	local completion = require('completion')
-	completion.setup()
+local completion = require('completion')
+completion.setup()
 
 -- link other binds
-	require('keybinds')
+require('keybinds')
 
--- test function
-	utils.map('n', '<leader>tt', ":lua require('auto-install').auto()<CR>")
+-- vimfims plugin
+utils.map('n', '<leader>vf', "<cmd>lua require('vimfims').tele_select()<CR>", {noremap=true})
 
-	require("mason").setup()
-	require("telescope").setup()
+-- set expandtab
+vim.cmd('set shiftwidth=4')
+vim.cmd('set expandtab')
 
+-- let copilot markdown
+vim.cmd('let g:copilot_filetypes = {"markdown": v:true}')
 
+-- dap
+local dap_config = require('dap-config')
+dap_config.setup()
