@@ -10,9 +10,10 @@ local utils = require('utils')
 local appearance = require('appearance')
 -- apply general-appearance
 appearance.set_scheme('tokyonight-night')
--- link auto-install
--- local auto_install = require('auto-install')
--- auto_install.auto()
+
+-- basics
+require("mason").setup()
+require("telescope").setup()
 
 -- link harpoon
 local harpoon = require('harpoon-config')
@@ -38,10 +39,6 @@ completion.setup()
 -- link other binds
 require('keybinds')
 
--- test function
-require("mason").setup()
-require("telescope").setup()
-
 -- vimfims plugin
 utils.map('n', '<leader>vf', "<cmd>lua require('vimfims').tele_select()<CR>", {noremap=true})
 
@@ -51,11 +48,6 @@ vim.cmd('set expandtab')
 
 -- let copilot markdown
 vim.cmd('let g:copilot_filetypes = {"markdown": v:true}')
--- don't autostart copilot
-vim.cmd('let g:copilot_autostart = v:false')
-
--- let markdown preview be on server
-vim.cmd('let g:mkdp_open_to_the_world = 1')
 
 -- dap
 local dap_config = require('dap-config')

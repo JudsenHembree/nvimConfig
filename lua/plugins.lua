@@ -61,8 +61,6 @@ return require('packer').startup(function(use)
   use {'neovim/nvim-lspconfig',
   	config = "require('lsp-config')"
 	} -- Configurations for Nvim LSP
-  -- lsp in docker
-  use {'lspcontainers/lspcontainers.nvim'}
 
   -- linter
   use {'mfussenegger/nvim-lint'}
@@ -70,21 +68,11 @@ return require('packer').startup(function(use)
   -- Copilot
   use {'github/copilot.vim'}
 
-  -- tmux and neovim window swaps
-  use {
-	"christoomey/vim-tmux-navigator"
-  }
-
   -- markdown preview
   use {
 	  "ellisonleao/glow.nvim",
 	  config = function() require("glow").setup() end,
   }
-
-  use({
-    "iamcco/markdown-preview.nvim",
-    run = function() vim.fn["mkdp#util#install"]() end,
-  })
 
   use { "williamboman/mason.nvim",
   	config = require("mason-config")
@@ -92,7 +80,7 @@ return require('packer').startup(function(use)
 
   -- telescope is fuzzy finder and such
   use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.0',
+	  'nvim-telescope/telescope.nvim', tag = '0.1.4',
 	  requires = { {'nvim-lua/plenary.nvim'} },
   }
 
@@ -104,7 +92,4 @@ return require('packer').startup(function(use)
 
   -- in file debugging
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} } -- debugger :chad:
-
-  -- latex integration
-  use { 'lervag/vimtex' }
 end)
