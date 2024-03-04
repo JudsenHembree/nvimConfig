@@ -92,4 +92,36 @@ return require('packer').startup(function(use)
 
   -- in file debugging
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} } -- debugger :chad:
+
+  -- git
+  use {
+      'pwntester/octo.nvim',
+      requires = {
+          'nvim-lua/plenary.nvim',
+          'nvim-telescope/telescope.nvim',
+          'nvim-tree/nvim-web-devicons',
+      },
+      config = function ()
+          require"octo".setup()
+      end
+  }
+
+  -- notes
+  use({
+  "epwalsh/obsidian.nvim",
+  tag = "*",
+  requires = {
+    "nvim-lua/plenary.nvim",
+  },
+  config = function()
+    require("obsidian").setup({
+      workspaces = {
+        {
+          name = "personal",
+          path = "~/notes/durham_dnd/durham_dnd",
+        },
+      },
+    })
+  end,
+})
 end)

@@ -10,14 +10,17 @@ function handle_mapping()
     utils.map("n", "<leader>s", "<CMD>lua require'dap'.step_into()<CR>", opts)
     utils.map("n", "<leader>S", "<CMD>lua require'dap'.step_over()<CR>", opts)
     utils.map("n", "<leader>O", "<CMD>lua require'dap'.step_out()<CR>", opts)
+    utils.map("n", "<leader>td", "<CMD>lua require'dapui'.toggle()<CR>", opts)
+    utils.map("n", "<leader>te", "<CMD>lua require'dapui'.eval()<CR>", opts)
+    utils.map("n", "<leader>tw", "<CMD>lua require'dapui'.elements.watches.add()<CR>", opts)
 end
 
 
 function setup_servers()
-    dap.adapters.lldb = {
-        type = 'executable',
-        command = '/usr/bin/lldb-vscode', -- adjust as needed, must be absolute path
-        name = 'lldb'
+    dap.adapters.gdb = {
+        type = "executable",
+        command = "gdb",
+        args = { "-i", "dap" }
     }
 end
 
@@ -25,30 +28,28 @@ end
 function configure()
     dap.configurations.cpp = {
         {
-            name = 'Launch',
-            type = 'lldb',
-            request = 'launch',
+            name = "Launch",
+            type = "gdb",
+            request = "launch",
             program = function()
                 return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
             end,
-            cwd = '${workspaceFolder}',
-            stopOnEntry = false,
-            args = {},
-
-            -- 💀
-            -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
-            --
-            --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
-            --
-            -- Otherwise you might get the following error:
-            --
-            --    Error on launch: Failed to attach to the target process
-            --
-            -- But you should be aware of the implications:
-            -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-            -- runInTerminal = false,
+            cwd = "${workspaceFolder}",
         },
     }
+
+    dap.configurations.zig = {
+        {
+            name = "Launch",
+            type = "gdb",
+            request = "launch",
+            program = function()
+                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+            cwd = "${workspaceFolder}",
+        },
+    }
+
 end
 
 dap_config.setup = function()
