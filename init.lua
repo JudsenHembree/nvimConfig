@@ -16,7 +16,7 @@ require("mason").setup()
 require("telescope").setup()
 
 -- github octo
-require("octo").setup()
+-- require("octo").setup()
 
 -- link harpoon
 local harpoon = require('harpoon-config')
@@ -62,3 +62,4 @@ require("nvim-treesitter.configs").setup({
     enable = true,
   },
 })
+
