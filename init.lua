@@ -15,6 +15,9 @@ appearance.set_scheme('tokyonight-night')
 require("mason").setup()
 require("telescope").setup()
 
+-- github octo
+-- require("octo").setup()
+
 -- link harpoon
 local harpoon = require('harpoon-config')
 harpoon.binds()
@@ -52,3 +55,11 @@ vim.cmd('let g:copilot_filetypes = {"markdown": v:true}')
 -- dap
 local dap_config = require('dap-config')
 dap_config.setup()
+
+require("nvim-treesitter.configs").setup({
+  ensure_installed = { "markdown", "markdown_inline", ... },
+  highlight = {
+    enable = true,
+  },
+})
+

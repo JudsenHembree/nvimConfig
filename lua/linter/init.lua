@@ -3,6 +3,11 @@ local linter = {}
 function linter.setup()
     local ft = require('guard.filetype')
     local diag_fmt = require('guard.lint').diag_fmt
+    ft('cpp'):fmt(
+    {
+        cmd = "clang-format",
+        stdin = true
+    })
     -- Call setup() LAST!
     require('guard').setup({
         -- the only options for the setup function
