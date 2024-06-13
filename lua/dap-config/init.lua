@@ -13,10 +13,23 @@ function handle_mapping()
     utils.map("n", "<leader>td", "<CMD>lua require'dapui'.toggle()<CR>", opts)
     utils.map("n", "<leader>te", "<CMD>lua require'dapui'.eval()<CR>", opts)
     utils.map("n", "<leader>tw", "<CMD>lua require'dapui'.elements.watches.add()<CR>", opts)
+    utils.map('n', '<leader>rr', "<CMD>lua require('dap').run_last()<CR>", opts)
+
+--  run_to_cursor()                                            *dap.run_to_cursor()*
+--          Continues execution to the current cursor.
+--  
+--          This temporarily removes all breakpoints, sets a breakpoint at the
+--          cursor, resumes execution and then adds back all breakpoints again.
+    utils.map("n", "<leader>rc", "<CMD>lua require'dap'.run_to_cursor()<CR>", opts)
+end
+
+function setup_signs()
+  vim.fn.sign_define('DapBreakpoint', {text='ඞ', texthl='', linehl='', numhl=''})
 end
 
 
 function setup_servers()
+    local dap = require("dap")
     dap.adapters.gdb = {
         type = "executable",
         command = "gdb",
@@ -26,6 +39,8 @@ end
 
 
 function configure()
+    local dap = require("dap")
+
     dap.configurations.cpp = {
         {
             name = "Launch",
@@ -34,8 +49,14 @@ function configure()
             program = function()
                 return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
             end,
+            args = function()
+                -- use split later
+                return vim.fn.input('Args: ', ' ', 'file')
+            end,
             cwd = "${workspaceFolder}",
+            stopAtBeginningOfMainSubprogram = false,
         },
+
     }
 
     dap.configurations.zig = {
@@ -44,18 +65,40 @@ function configure()
             type = "gdb",
             request = "launch",
             program = function()
-                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                return vim.fn.input({
+                    prompt = 'Path to executable: ', 
+                    default = vim.fn.getcwd() .. '/', 
+                    completion = 'file'
+                })
             end,
             cwd = "${workspaceFolder}",
         },
     }
+end
 
+function setup_listeners()
+    local dap, dapui = require("dap"), require("dapui")
+    dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
+        utils.map("n", "<leader>K", "<CMD>lua require('dap.ui.widgets').hover()<CR>", opts)
+    end
+    dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+    end
+    dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+    end
+    dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+    end
 end
 
 dap_config.setup = function()
     setup_servers()
     configure()
     dap_ui.setup() -- ui for dap
+    setup_listeners() -- auto open
+    setup_signs() -- amogus
     handle_mapping()
 end
 

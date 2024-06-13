@@ -91,7 +91,7 @@ return require('packer').startup(function(use)
   }
 
   -- in file debugging
-  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} } -- debugger :chad:
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} } -- debugger :chad:
 
 ---- git
 --  use {
