@@ -1,4 +1,0 @@
-local linter = {}
-
-return linter
-
