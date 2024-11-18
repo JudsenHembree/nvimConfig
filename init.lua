@@ -31,10 +31,6 @@ local lsp = require('lsp-config')
 lsp.setup()
 lsp.setup_sort_of_lsp()
 
--- linter
-local linter = require('linter')
-linter.setup()
-
 -- setup completion
 local completion = require('completion')
 completion.setup()
@@ -63,3 +59,5 @@ require("nvim-treesitter.configs").setup({
   },
 })
 
+-- spellcheck
+vim.opt.spell = true

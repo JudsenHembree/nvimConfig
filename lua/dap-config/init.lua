@@ -7,6 +7,7 @@ local dap_config = {}
 function handle_mapping()
     utils.map("n", "<leader>b", "<CMD>lua require'dap'.toggle_breakpoint()<CR>", opts)
     utils.map("n", "<leader>c", "<CMD>lua require'dap'.continue()<CR>", opts)
+    utils.map("n", "<leader>cc", "<CMD>lua require'dap'.run_to_cursor()<CR>", opts)
     utils.map("n", "<leader>s", "<CMD>lua require'dap'.step_into()<CR>", opts)
     utils.map("n", "<leader>S", "<CMD>lua require'dap'.step_over()<CR>", opts)
     utils.map("n", "<leader>O", "<CMD>lua require'dap'.step_out()<CR>", opts)
@@ -14,6 +15,7 @@ function handle_mapping()
     utils.map("n", "<leader>te", "<CMD>lua require'dapui'.eval()<CR>", opts)
     utils.map("n", "<leader>tw", "<CMD>lua require'dapui'.elements.watches.add()<CR>", opts)
     utils.map('n', '<leader>rr', "<CMD>lua require('dap').run_last()<CR>", opts)
+    utils.map('n', '<leader>pp', "<CMD>lua require('dap').pause()<CR>", opts)
 
 --  run_to_cursor()                                            *dap.run_to_cursor()*
 --          Continues execution to the current cursor.
