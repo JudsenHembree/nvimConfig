@@ -10,11 +10,12 @@ return {
 		keys = {
 			{"<leader>ff", "<cmd>Telescope find_files<CR>"},
 			{"<leader>rg", "<cmd>Telescope live_grep<CR>"},
+			{"<leader>qg", "<cmd>Telescope grep_string<CR>"},
 			{"<leader>of", "<cmd>Telescope oldfiles<CR>"},
 			{"<leader>cs", "<cmd>Telescope colorscheme<CR>"},
 			{"<leader>M", "<cmd>Telescope keymaps<CR>"},
 			{"<leader>d", "<cmd>Telescope diagnostics<CR>"},
-			{"<leader>h", "<cmd>Telescope help_tags<CR>"} 
+			{"<leader>h", "<cmd>Telescope help_tags<CR>"}
 		},
 		opts = function()
 			return {
