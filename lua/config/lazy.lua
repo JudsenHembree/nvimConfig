@@ -24,6 +24,9 @@ vim.g.mapleader = " "
 
 vim.wo.number = true
 
+-- Turn on builtin spell check
+vim.opt.spell = true
+
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
