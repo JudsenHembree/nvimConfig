@@ -48,6 +48,10 @@ return {
 						require("lspconfig")[server_name].setup {}
 					end,
 				}
+
+				-- Zig
+				require'lspconfig'.zls.setup{}
+
 				-- lsp bindings
 				vim.keymap.set('n', '<leader>ca', "<cmd>lua vim.lsp.buf.code_action({apply=true})<cr>")
 				vim.keymap.set('n', '<leader>gd', "<cmd>lua vim.lsp.buf.definition()<cr>") -- go to definition
