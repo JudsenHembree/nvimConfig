@@ -14,7 +14,7 @@ return {
 			{"<leader>of", "<cmd>Telescope oldfiles<CR>"},
 			{"<leader>cs", "<cmd>Telescope colorscheme<CR>"},
 			{"<leader>M", "<cmd>Telescope keymaps<CR>"},
-			{"<leader>d", "<cmd>Telescope diagnostics<CR>"},
+			{"<leader>td", "<cmd>Telescope diagnostics<CR>"},
 			{"<leader>h", "<cmd>Telescope help_tags<CR>"}
 		},
 		opts = function()
