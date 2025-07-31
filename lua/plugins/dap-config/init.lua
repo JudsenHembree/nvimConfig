@@ -28,7 +28,8 @@ return {
 			{
 				"theHamsta/nvim-dap-virtual-text",
 				opts = {},
-			}
+			},
+			"leoluz/nvim-dap-go"
 		},
 
 		-- stylua: ignore
@@ -54,8 +55,19 @@ return {
 		},
 
 		config = function()
-    			local dap = require("dap")
+			local dap = require("dap")
 			require("mason-nvim-dap").setup()
+			require("dap-go").setup({
+				dap_configurations = {
+					{
+						type = "go",
+						name = "Debug (full cmd line)",
+						request = "launch",
+						program ="${file}",
+						args = require("dap-go").get_arguments
+					},
+				}
+			})
 			vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
 			dap.adapters.gdb = {
@@ -74,7 +86,7 @@ return {
 					end,
 					args = function()
 						-- use split later
-						return vim.fn.input('Args: ', ' ', 'file')
+						return vim.fn.input('Args: ', '', 'file')
 					end,
 					cwd = "${workspaceFolder}",
 					stopAtBeginningOfMainSubprogram = false,
@@ -82,21 +94,21 @@ return {
 
 			}
 
-    dap.configurations.zig = {
-        {
-            name = "Launch",
-            type = "gdb",
-            request = "launch",
-            program = function()
-                return vim.fn.input({
-                    prompt = 'Path to executable: ', 
-                    default = vim.fn.getcwd() .. '/', 
-                    completion = 'file'
-                })
-            end,
-            cwd = "${workspaceFolder}",
-        },
-    }
+			dap.configurations.zig = {
+				{
+					name = "Launch",
+					type = "gdb",
+					request = "launch",
+					program = function()
+						return vim.fn.input({
+							prompt = 'Path to executable: ', 
+							default = vim.fn.getcwd() .. '/', 
+							completion = 'file'
+						})
+					end,
+					cwd = "${workspaceFolder}",
+				},
+			}
 		end,
 	},
 
@@ -149,4 +161,25 @@ return {
 		-- mason-nvim-dap is loaded when nvim-dap loads
 		config = function() end,
 	},
+
+	{
+		"nvim-neotest/neotest",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"alfaix/neotest-gtest",
+			-- your other adapters here
+		},
+		config = function()
+			vim.defer_fn(function()
+				require("neotest").setup({
+					adapters = {
+						require("neotest-gtest").setup({
+							debug_adapter = "gdb",
+						}),
+					},
+				})
+			end, 100)
+		end,
+	}
+
 }

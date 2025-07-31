@@ -7,7 +7,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
+			{ out,                            "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -26,6 +26,17 @@ vim.wo.number = true
 
 -- Turn on builtin spell check
 vim.opt.spell = true
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+	pattern = { "*.cpp", "*.h" },
+	callback = function()
+		vim.wo.foldmethod = "marker"
+		vim.wo.foldlevel = 1
+		vim.cmd("normal! zM") -- Force reloading folds
+	end
+})
+
+vim.g.clipboard = 'osc52'
 
 -- Setup lazy.nvim
 require("lazy").setup({
