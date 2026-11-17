@@ -15,3 +15,11 @@
 
 *In the Land of Mordor where the Shadows lie.*
 # devcontainer
+
+---
+
+## 2026 rebuild
+nvim 0.12 (Arch `neovim`) · lazy.nvim · built-in LSP (`vim.lsp.enable`) · blink.cmp · conform · telescope · treesitter (main) · dap + gdb · obsidian.nvim (community fork) · `colors/dragonfire.lua`.
+
+Leader is `<Space>` — press it and wait for the which-key menu.
+Groups: `f` find · `c` code · `d` debug · `h` harpoon · `n` notes · `g` git · `u` toggles. Old favourites still work: `ff` `rg` `of` `gd` `rn` `ca` `qd` `in` `hh` `H` `md`.
